@@ -36,6 +36,8 @@ public class User {
     @Column(nullable = false)
     private String role;
 
+    @OneToMany(mappedBy = "createdBy")
+    List<Course> courses;
 
 
   
@@ -110,5 +112,15 @@ public class User {
         this.passwordRepeat = passwordRepeat;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
+
 
 }
+

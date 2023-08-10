@@ -9,6 +9,9 @@
 <body layout:fragment="content">
 
 <div th:if="${successMessage}" class="alert alert-info position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successMessage}"></p> </div>
+<div th:if="${errorMessage}" class="alert alert-danger position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5" role="alert">
+    <p th:text="${errorMessage}"></p>
+</div>
 <br>
 <br>
 <br>

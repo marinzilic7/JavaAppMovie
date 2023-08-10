@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.dao.DataIntegrityViolationException;
+
 
 
 @Controller
@@ -68,10 +70,16 @@ public class CategoryController {
     @GetMapping("/category/delete/{id}")
     public String deleteCategoy(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
 
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
-        categoryRepository.delete(category);
-        redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno izbrisana!");
+//        Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
+//        categoryRepository.delete(category);
+//        redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno izbrisana!");
 
+        try {
+            categoryRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno izbrisana.");
+        } catch (DataIntegrityViolationException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Kategorija se ne može izbrisati jer je referencirana u tečajevima.");
+        }
         return "redirect:/category";
     }
 }

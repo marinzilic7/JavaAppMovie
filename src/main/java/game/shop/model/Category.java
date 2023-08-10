@@ -17,7 +17,7 @@ import java.util.List;
         @NotBlank(message = "Unesite naziv kategorije.")
         String name;
 
-        @OneToMany(mappedBy = "category")  // Naziv polja koje predstavlja kategoriju u Course modelu
+        @OneToMany(mappedBy = "category")
         List<Course> courses;
 
 

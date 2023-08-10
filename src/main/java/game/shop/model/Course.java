@@ -35,6 +35,10 @@ public class Course {
     @JoinColumn(name = "category_id")  // Naziv stupca koji će povezivati Course s Category
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")  // Naziv stupca koji će povezivati Course s Category
+    private User createdBy;
+
 
 
     public Course(Long id, String name, String opis, String cijena) {
@@ -95,5 +99,21 @@ public class Course {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Course(User createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public User getUser() {
+        return createdBy;
+    }
+
+    public void setUser(User user) {
+        this.createdBy = user;
+    }
+
+    public void createdBy(Long userId) {
+        this.createdBy = createdBy;
     }
 }
