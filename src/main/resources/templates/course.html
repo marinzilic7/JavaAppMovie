@@ -15,6 +15,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Naziv</th>
                     <th scope="col">Opis</th>
+                    <th scope="col">Kategorija</th>
                     <th scope="col">Cijena</th>
                     <th scope="col">Izbrisi</th>
                     <th scope="col">Uredi</th>
@@ -25,9 +26,10 @@
                     <th scope="row" th:text="${course.getId()}"></th>
                     <td th:text="${course.getName()}" ></td>
                     <td th:text="${course.getOpis()}"></td>
+                    <td th:text="${course.getCategory().getName()}"></td>
                     <td th:text="${course.getCijena()} + ' $'"></td>
-                    <td><a data-toggle="tooltip" data-placement="top" title="Briši kategoriju" class="btn btn-sm btn-danger" th:href="@{/course/delete/{id}(id=${course.getId()})}">Izbrisi</a></td>
-                    <td><a data-toggle="tooltip" data-placement="top" title="Uredi kategoriju" class="btn btn-sm btn-warning" th:href="@{/course/edit/{id}(id=${course.getId()})}">Uredi</a></td>
+                    <td><a data-toggle="tooltip" data-placement="top" title="Briši tečaj" class="btn btn-sm btn-danger" th:href="@{/course/delete/{id}(id=${course.getId()})}">Izbrisi</a></td>
+                    <td><a data-toggle="tooltip" data-placement="top" title="Uredi tečaj" class="btn btn-sm btn-warning" th:href="@{/course/edit/{id}(id=${course.getId()})}">Uredi</a></td>
 
                 </tr>
                 </tbody>
@@ -35,33 +37,32 @@
         </div>
     </div>
 
-    <div th:if="${igraDodana}">
-        <p style="position:absolute; right:0; top:80px; margin-right:30px; width:10%; " class="alert alert-warning"  th:text="${poruka}"></p>
-    </div>
-    <div th:if="${gameAdd}">
-        <p style="position:absolute; right:0; top:80px; margin-right:30px; width:15%; " class="alert alert-success text-center"  th:text="${dodanaIgra}"></p>
-    </div>
-    <div th:if="${noDelete}">
-        <p style="position:absolute; right:0; top:80px; margin-right:30px; width:15%; " class="alert alert-warning text-center"  th:text="${deleteNo}"></p>
-    </div>
+
 
 
     <div class="modal fade" id="addCategory">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nova igra</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Novi tečaj</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form th:object="${course}" th:action="@{/course/add}" method="POST">
                     <div class="modal-body">
-                        <label class="col-form-label">Unesite naziv igre:</label>
+                        <label class="col-form-label">Unesite naziv tečaja:</label>
                         <input class="form-control" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" type="text" th:field="*{name}">
                         <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
-                        <label class="col-form-label">Unesite opis igre:</label>
+                        <label class="col-form-label">Unesite opis tečaja:</label>
                         <textarea class="form-control" th:classappend="${#fields.hasErrors('opis') ? 'is-invalid' : ''}" type="text" th:field="*{opis}"></textarea>
                         <div th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}" class="invalid-feedback"></div>
-                        <label class="col-form-label">Unesite cijenu igre:</label>
+
+                        <label class="col-form-label">Odaberite kategoriju:</label>
+                        <select class="form-select" aria-label="Category"  th:field="*{category}">
+                            <option th:each="cat : ${categories}" th:value="${cat.getId()}" th:text="${cat.getName()}"></option>
+                        </select>
+
+
+                        <label class="col-form-label">Unesite cijenu tečaja:</label>
                         <input class="form-control" th:classappend="${#fields.hasErrors('cijena') ? 'is-invalid' : ''}" type="text" th:field="*{cijena}">
                         <div th:if="${#fields.hasErrors('cijena')}" th:errors="*{cijena}" class="invalid-feedback"></div>
 

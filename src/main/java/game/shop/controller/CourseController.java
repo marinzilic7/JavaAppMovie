@@ -1,6 +1,8 @@
 package game.shop.controller;
+import game.shop.model.Category;
 import game.shop.model.Course;
 import game.shop.model.UserDetails;
+import game.shop.repositories.CategoryRepository;
 import game.shop.repositories.CourseRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,8 @@ import java.util.List;
 public class CourseController {
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
 
 
@@ -35,10 +39,14 @@ public class CourseController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         Long userId = userDetails.getUserId(); // ili koristite metodu kojom dobavljate ID korisnika
+        List<Category> categories = categoryRepository.findAll();
+        System.out.println(categories.size());
+        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("categories", categories);
         model.addAttribute("userId", userId);
         model.addAttribute("user", user);
         model.addAttribute("course", new Course());
-        model.addAttribute("courses", courseRepository.findAll());
+
         model.addAttribute("added", false);
         model.addAttribute("activeLink", "Igre");
 
@@ -51,15 +59,31 @@ public class CourseController {
         UserDetails user = (UserDetails) auth.getPrincipal();
         model.addAttribute("user", user);
         if (result.hasErrors()) {
+            List<Category> categories = categoryRepository.findAll();
+            model.addAttribute("categories", categories);
             model.addAttribute("course", course);
             model.addAttribute("courses", courseRepository.findAll());
             model.addAttribute("added", true);
             model.addAttribute("activeLink", "Igre");
             return "course";
         }
+        System.out.println(course.getCategory());
+        Long categoryId = course.getCategory().getId();
+        Category selectedCategory = categoryRepository.findById(categoryId).orElse(null);
+        course.setCategory(selectedCategory);
         courseRepository.save(course);
         return "redirect:/course";
     }
+
+
+    private String getCategoryNameForCourse(Course course) {
+        Category category = course.getCategory(); // Pretpostavljamo da postoji metoda za dohvaćanje kategorije iz kursa
+        if (category != null) {
+            return category.getName();
+        }
+        return "Nepoznata kategorija"; // Vratite odgovarajuću vrijednost za slučaj da kategorija nije postavljena
+    }
+
 
     @GetMapping("/course/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
@@ -70,6 +94,8 @@ public class CourseController {
         model.addAttribute("course", course);
         model.addAttribute("courses", courseRepository.findAll());
         model.addAttribute("activeLink", "Kategorije");
+        String categoryName = getCategoryNameForCourse(course); // Zamijenite s odgovarajućim kodom
+        model.addAttribute("categoryName", categoryName);
         return "course_edit";
     }
 

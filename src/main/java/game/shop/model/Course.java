@@ -31,7 +31,9 @@ public class Course {
     @OneToMany(mappedBy = "parent")
     List<Course> courses;
 
-
+    @ManyToOne
+    @JoinColumn(name = "category_id")  // Naziv stupca koji će povezivati Course s Category
+    private Category category;
 
 
 
@@ -87,11 +89,11 @@ public class Course {
         this.parent = parent;
     }
 
-    public List<Course> getCategories() {
-        return courses;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategories(List<Course> categories) {
-        this.courses = categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

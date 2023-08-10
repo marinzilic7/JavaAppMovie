@@ -17,7 +17,8 @@ import java.util.List;
         @NotBlank(message = "Unesite naziv kategorije.")
         String name;
 
-
+        @OneToMany(mappedBy = "category")  // Naziv polja koje predstavlja kategoriju u Course modelu
+        List<Course> courses;
 
 
 
@@ -50,7 +51,13 @@ import java.util.List;
             this.name = name;
         }
 
+        public List<Course> getCourses() {
+            return courses;
+        }
 
+        public void setCourses(List<Course> courses) {
+            this.courses = courses;
+        }
 
 
 

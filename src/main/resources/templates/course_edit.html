@@ -20,6 +20,12 @@
         <label class="col-form-label">Unesite opis tečaja:</label>
         <input class="form-control" th:classappend="${#fields.hasErrors('opis') ? 'is-invalid' : ''}" type="text" th:field="*{opis}">
         <div th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}" class="invalid-feedback"></div>
+        <label class="col-form-label">Odaberite kategoriju:</label>
+        <select class="form-select" aria-label="Category" th:field="*{category.id}">
+          <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}" th:selected="${cat.id == course.category.id}"></option>
+        </select>
+        <span class="mt-2" th:text="${categoryName}"></span>
+
         <label class="col-form-label">Unesite cijenu tečaja:</label>
         <input class="form-control" th:classappend="${#fields.hasErrors('cijena') ? 'is-invalid' : ''}" type="text" th:field="*{cijena}">
         <div th:if="${#fields.hasErrors('cijena')}" th:errors="*{cijena}" class="invalid-feedback"></div>
