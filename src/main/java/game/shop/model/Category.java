@@ -17,12 +17,9 @@ import java.util.List;
         @NotBlank(message = "Unesite naziv kategorije.")
         String name;
 
-        @ManyToOne
-        @JoinColumn(name = "category_id", nullable = true)
-        game.shop.model.Category  parent;
 
-        @OneToMany(mappedBy = "parent")
-        List<game.shop.model.Category> categories;
+
+
 
 
 
@@ -54,21 +51,9 @@ import java.util.List;
         }
 
 
-        public game.shop.model.Category getParent() {
-            return parent;
-        }
 
-        public void setParent(game.shop.model.Category  parent) {
-            this.parent = parent;
-        }
 
-        public List<game.shop.model.Category > getCategories() {
-            return categories;
-        }
 
-        public void setCategories(List<game.shop.model.Category > categories) {
-            this.categories = categories;
-        }
     }
 
 
