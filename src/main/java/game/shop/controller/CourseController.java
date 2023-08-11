@@ -50,6 +50,10 @@ public class CourseController {
         model.addAttribute("course", new Course());
         model.addAttribute("added", false);
         model.addAttribute("activeLink", "Igre");
+        User userr = userDetails.getUser();
+        System.out.println("User je" + userr);
+        Long userIdd = user.getUserId();
+        System.out.println("ID korisnika: " + userIdd);
 
         return "course";
     }
@@ -67,11 +71,13 @@ public class CourseController {
             model.addAttribute("activeLink", "Igre");
             return "course";
         }
-
-        System.out.println(course.getCategory());
+        Long userIdd = user.getUserId();
+        User selectedUser = userRepository.findById(userIdd).orElse(null);
+        course.setUser(selectedUser);
         Long categoryId = course.getCategory().getId();
         Category selectedCategory = categoryRepository.findById(categoryId).orElse(null);
         course.setCategory(selectedCategory);
+
         courseRepository.save(course);
         redirectAttributes.addFlashAttribute("successCourse", "Tečaj je uspješno dodan!");
         return "redirect:/course";
@@ -95,11 +101,16 @@ public class CourseController {
 
     @PostMapping("course/edit/{id}")
     public String editCategory (@PathVariable("id") Long id, @Valid Course course, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails user = (UserDetails) auth.getPrincipal();
         if (result.hasErrors()) {
             model.addAttribute("course", course);
             model.addAttribute("activeLink", "Igre");
             return "course_edit";
         }
+        Long userIdd = user.getUserId();
+        User selectedUser = userRepository.findById(userIdd).orElse(null);
+        course.setUser(selectedUser);
         courseRepository.save(course);
         redirectAttributes.addFlashAttribute("successCourse", "Tečaj je uspješno uredjen!");
         return "redirect:/course";

@@ -105,15 +105,13 @@ public class Course {
         this.createdBy = createdBy;
     }
 
+
+
     public User getUser() {
         return createdBy;
     }
 
-    public void setUser(User user) {
-        this.createdBy = user;
-    }
-
-    public void createdBy(Long userId) {
+    public void setUser(User createdBy) {
         this.createdBy = createdBy;
     }
 }
