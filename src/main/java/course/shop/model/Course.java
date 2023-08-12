@@ -1,4 +1,4 @@
-package game.shop.model;
+package course.shop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

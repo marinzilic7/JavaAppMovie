@@ -1,6 +1,6 @@
-package game.shop.repositories;
+package course.shop.repositories;
 
-import game.shop.model.User;
+import course.shop.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

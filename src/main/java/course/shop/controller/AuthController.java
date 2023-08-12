@@ -1,6 +1,7 @@
-package game.shop.controller;
+package course.shop.controller;
 
-import game.shop.repositories.UserRepository;
+import course.shop.model.User;
+import course.shop.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import game.shop.model.User;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller

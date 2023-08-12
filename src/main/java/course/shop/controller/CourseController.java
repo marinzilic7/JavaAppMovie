@@ -1,11 +1,11 @@
-package game.shop.controller;
-import game.shop.model.Category;
-import game.shop.model.Course;
-import game.shop.model.User;
-import game.shop.model.UserDetails;
-import game.shop.repositories.CategoryRepository;
-import game.shop.repositories.CourseRepository;
-import game.shop.repositories.UserRepository;
+package course.shop.controller;
+import course.shop.model.Course;
+import course.shop.model.User;
+import course.shop.model.UserDetails;
+import course.shop.model.Category;
+import course.shop.repositories.CategoryRepository;
+import course.shop.repositories.CourseRepository;
+import course.shop.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class CourseController {
 
 
     @GetMapping("/course")
-    public String showGames (Model model,@AuthenticationPrincipal UserDetails userDetails) {
+    public String showCourses (Model model,@AuthenticationPrincipal UserDetails userDetails) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         Long userId = userDetails.getUserId(); // ili koristite metodu kojom dobavljate ID korisnika
@@ -100,7 +100,7 @@ public class CourseController {
     }
 
     @PostMapping("course/edit/{id}")
-    public String editCategory (@PathVariable("id") Long id, @Valid Course course, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String editCoruse (@PathVariable("id") Long id, @Valid Course course, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         if (result.hasErrors()) {

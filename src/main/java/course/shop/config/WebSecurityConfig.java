@@ -1,8 +1,8 @@
-package game.shop.config;
+package course.shop.config;
 
 import javax.sql.DataSource;
 
-import game.shop.services.UserDetailsService;
+import course.shop.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

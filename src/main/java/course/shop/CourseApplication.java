@@ -1,14 +1,14 @@
-package game.shop;
+package course.shop;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 
-public class GameApplication {
+public class CourseApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(GameApplication.class, args);
+        SpringApplication.run(CourseApplication.class, args);
     }
 
 }

@@ -1,10 +1,9 @@
-package game.shop.controller;
+package course.shop.controller;
 
-import game.shop.model.Category;
+import course.shop.model.Category;
+import course.shop.model.UserDetails;
+import course.shop.repositories.CategoryRepository;
 
-import game.shop.model.Course;
-import game.shop.model.UserDetails;
-import game.shop.repositories.CategoryRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
