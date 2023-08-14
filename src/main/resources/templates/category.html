@@ -11,9 +11,9 @@
 </head>
 <body layout:fragment="content">
 
-<div th:if="${successMessage}" class="alert alert-info position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successMessage}"></p> </div>
-<div th:if="${errorMessage}" class="alert alert-danger position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5" role="alert">
-    <p th:text="${errorMessage}"></p>
+<div th:if="${successCategory}" class="alert alert-success position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successCategory}"></p> </div>
+<div th:if="${errorCategory}" class="alert alert-danger position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5" role="alert">
+    <p th:text="${errorCategory}"></p>
 </div>
 <br>
 <br>
@@ -109,6 +109,8 @@ color:rgba(245, 245, 245, 0.6);
   color:#fff;
 
 }
+
+
 
 
 </style>

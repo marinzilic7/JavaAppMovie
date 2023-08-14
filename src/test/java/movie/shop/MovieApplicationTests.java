@@ -1,10 +1,10 @@
-package course.shop;
+package movie.shop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CourseApplicationTests {
+class MovieApplicationTests {
 
     @Test
     void contextLoads() {

@@ -1,8 +1,8 @@
-package course.shop.config;
+package movie.shop.config;
 
 import javax.sql.DataSource;
 
-import course.shop.services.UserDetailsService;
+import movie.shop.services.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                 .loginPage("/login")
                 .permitAll()
                 .usernameParameter("email")
-                .defaultSuccessUrl("/course", true)
+                .defaultSuccessUrl("/movie", true)
                 .permitAll()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll();

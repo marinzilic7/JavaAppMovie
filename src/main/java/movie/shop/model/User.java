@@ -1,4 +1,4 @@
-package course.shop.model;
+package movie.shop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -37,7 +37,7 @@ public class User {
     private String role;
 
     @OneToMany(mappedBy = "createdBy")
-    List<Course> courses;
+    List<Movie> cours;
 
 
   
@@ -112,12 +112,12 @@ public class User {
         this.passwordRepeat = passwordRepeat;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public List<Movie> getCourses() {
+        return cours;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCourses(List<Movie> cours) {
+        this.cours = cours;
     }
 
 

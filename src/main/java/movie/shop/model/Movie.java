@@ -1,4 +1,4 @@
-package course.shop.model;
+package movie.shop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -6,30 +6,27 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name="courses")
-public class Course {
+@Table(name="movies")
+public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Unesite naziv tečaja.")
+    @NotBlank(message = "Unesite naziv...")
     String name;
 
     @Column(nullable = false)
-    @NotBlank(message = "Unesite opis  tečaja.")
+    @NotBlank(message = "Unesite opis...")
     String opis;
 
     @Column(nullable = false)
-    @NotBlank(message = "Unesite cijenu  tečaja.")
+    @NotBlank(message = "Unesite cijenu...")
     String cijena;
 
-    @ManyToOne
-    @JoinColumn(name = "tečaj_id", nullable = true)
-    Course parent;
 
-    @OneToMany(mappedBy = "parent")
-    List<Course> courses;
+
+
 
     @ManyToOne
     @JoinColumn(name = "category_id")  // Naziv stupca koji će povezivati Course s Category
@@ -41,14 +38,14 @@ public class Course {
 
 
 
-    public Course(Long id, String name, String opis, String cijena) {
+    public Movie(Long id, String name, String opis, String cijena) {
         this.id = id;
         this.name = name;
         this.opis = opis;
         this.cijena = cijena;
     }
 
-    public Course() {
+    public Movie() {
     }
 
     public Long getId() {
@@ -85,13 +82,7 @@ public class Course {
     }
 
 
-    public Course getParent() {
-        return parent;
-    }
 
-    public void setParent(Course parent) {
-        this.parent = parent;
-    }
 
     public Category getCategory() {
         return category;
@@ -101,7 +92,7 @@ public class Course {
         this.category = category;
     }
 
-    public Course(User createdBy) {
+    public Movie(User createdBy) {
         this.createdBy = createdBy;
     }
 

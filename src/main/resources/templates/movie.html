@@ -10,31 +10,32 @@
     <title>MovieApp</title>
 </head>
 <body layout:fragment="content">
-<div th:if="${successCourse}" class=" mt-5 alert alert-info position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successCourse}"></p>  </div>
-<br>
-<br>
+<div th:if="${successMovie}" class=" mt-5 alert alert-success position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successMovie}"></p>  </div>
 
+<br>
+<br>
+<br>
+<br>
     <div class="container mt-5">
         <div class="d-flex flex-column align-items-center">
             <button data-toggle="tooltip" data-placement="top" title="Dodaj film" type="button" class="btn btn-secondary col-xl-4" data-bs-toggle="modal" data-bs-target="#addCategory">Dodaj film</button>
-
         </div>
         <hr class="text-light mt-5">
-        <div class="row mt-5 ">
-            <div class="card text-white mb-3 Kartica ms-3" style="max-width: 18rem;" th:each="course: ${courses}">
-                <h4 class="card-title ms-3 mt-2" th:text="${course.getName()}"></h4>
-                <div class="card-header"> Kategorija: <span th:text="${course.getCategory().getName()}" style="font-style: italic;"></span></div>
+        <div class="row mt-5  ">
+            <div class="card text-white mb-3 Kartica ms-3  " style="max-width: 18rem;" th:each="movie: ${movies}">
+                <h4 class="card-title ms-3 mt-2" th:text="${movie.getName()}"></h4>
+                <div class="card-header"> Kategorija: <span th:text="${movie.getCategory().getName()}" style="font-style: italic;"></span></div>
                 <div class="card-body">
-                    <p class="card-text"> Opis: <span th:text="${course.getOpis()}" style="font-style: italic;"></span>
+                    <p class="card-text"> Opis: <span th:text="${movie.getOpis()}" style="font-style: italic;"></span>
                     <hr>
                     <div class="d-flex justify-content-between">
-                        <a href="#" class="card-link text-light text-decoration-none " th:text="${course.getCijena()} + ' $'"></a>
-                        <div href="#" class="card-link text-light text-decoration-none "> Korisnik: <span th:text="${course.getUser().getFirstname()}" style="font-style: italic;"></span> </div>
+                        <a href="#" class="card-link text-light text-decoration-none " th:text="${movie.getCijena()} + ' $'"></a>
+                        <div href="#" class="card-link text-light text-decoration-none "> Korisnik: <span th:text="${movie.getUser().getFirstname()}" style="font-style: italic;"></span> </div>
                     </div>
                     <hr>
-                    <a data-toggle="tooltip" data-placement="top" title="Briši tečaj" class="btn btn-sm btn-danger mt-1 w-100" th:href="@{/course/delete/{id}(id=${course.getId()})}">Izbrisi</a>
+                    <a data-toggle="tooltip" data-placement="top" title="Izbrisi" class="btn btn-sm btn-danger mt-1 w-100" th:href="@{/movie/delete/{id}(id=${movie.getId()})}">Izbrisi</a>
                     <br>
-                    <a data-toggle="tooltip" data-placement="top" title="Uredi tečaj" class="btn btn-sm btn-warning mt-1 w-100" th:href="@{/course/edit/{id}(id=${course.getId()})}">Uredi</a>
+                    <a data-toggle="tooltip" data-placement="top" title="Uredi" class="btn btn-sm btn-warning mt-1 w-100" th:href="@{/movie/edit/{id}(id=${movie.getId()})}">Uredi</a>
                 </div>
             </div>
 
@@ -51,23 +52,23 @@
                     <h5 class="modal-title text-light" id="exampleModalLabel">Dodaj film, seriju ili...</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form th:object="${course}" th:action="@{/course/add}" method="POST">
+                <form th:object="${movie}" th:action="@{/movie/add}" method="POST">
                     <div class="modal-body">
                         <label class="col-form-label text-light">Unesite naziv:</label>
-                        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" type="text" th:field="*{name}">
+                        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" type="text" th:field="*{name}" required>
                         <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
                         <label class="col-form-label text-light">Unesite opis:</label>
-                        <textarea class="form-control inputPolje" th:classappend="${#fields.hasErrors('opis') ? 'is-invalid' : ''}" type="text" th:field="*{opis}"></textarea>
+                        <textarea class="form-control inputPolje" th:classappend="${#fields.hasErrors('opis') ? 'is-invalid' : ''}" type="text" th:field="*{opis}" required></textarea>
                         <div th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}" class="invalid-feedback"></div>
 
                         <label class="col-form-label text-light">Odaberite kategoriju:</label>
-                        <select class="form-select inputPolje " aria-label="Category"  th:field="*{category}">
-                            <option class="inputPolje" th:each="cat : ${categories} " th:value="${cat.getId()}" th:text="${cat.getName()}"></option>
+                        <select class="form-select inputPolje " aria-label="Category"  th:field="*{category}" required>
+                            <option class="inputPolje" th:each="cat : ${categories} " th:value="${cat.getId()}" th:text="${cat.getName()}" ></option>
                         </select>
 
 
                         <label class="col-form-label text-light">Unesite cijenu:</label>
-                        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('cijena') ? 'is-invalid' : ''}" type="text" th:field="*{cijena}">
+                        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('cijena') ? 'is-invalid' : ''}" type="text" th:field="*{cijena}" required>
                         <div th:if="${#fields.hasErrors('cijena')}" th:errors="*{cijena}" class="invalid-feedback"></div>
 
 
@@ -83,6 +84,7 @@
     </div>
 
 
+
     <script type="text/javascript">
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
@@ -93,6 +95,7 @@
             $('#addCategory').modal("show");
         })
     </script>
+
 </body>
 </html>
 
@@ -135,6 +138,13 @@ color:rgba(245, 245, 245, 0.6);
   background-color: #2A2A2A;
   color:#fff;
 
+}
+
+@media only screen and (max-width: 576px) {
+  .Kartica {
+    margin:auto !important;
+    margin-top:20px !important;
+  }
 }
 
 </style>

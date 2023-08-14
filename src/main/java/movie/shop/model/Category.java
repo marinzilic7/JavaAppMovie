@@ -1,4 +1,4 @@
-package course.shop.model;
+package movie.shop.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -18,7 +18,7 @@ import java.util.List;
         String name;
 
         @OneToMany(mappedBy = "category")
-        List<Course> courses;
+        List<Movie> movie;
 
 
 
@@ -51,12 +51,12 @@ import java.util.List;
             this.name = name;
         }
 
-        public List<Course> getCourses() {
-            return courses;
+        public List<Movie> getCourses() {
+            return movie;
         }
 
-        public void setCourses(List<Course> courses) {
-            this.courses = courses;
+        public void setCourses(List<Movie> cours) {
+            this.movie = cours;
         }
 
 

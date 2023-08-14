@@ -1,8 +1,8 @@
-package course.shop.controller;
+package movie.shop.controller;
 
-import course.shop.model.Category;
-import course.shop.model.UserDetails;
-import course.shop.repositories.CategoryRepository;
+import movie.shop.model.Category;
+import movie.shop.model.UserDetails;
+import movie.shop.repositories.CategoryRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +49,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category/add")
-    public String addCategory (@Valid Category category, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
+    public String dodajKategoriju (@Valid Category category, BindingResult result, Model model,RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         model.addAttribute("user", user);
@@ -61,23 +61,21 @@ public class CategoryController {
             return "category";
         }
         categoryRepository.save(category);
-        redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno dodana!");
+        redirectAttributes.addFlashAttribute("successCategory", "Kategorija je uspješno dodana!");
 
         return "redirect:/category";
     }
 
     @GetMapping("/category/delete/{id}")
-    public String deleteCategoy(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+    public String izbrisiKategoriju (@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
 
-//        Category category = categoryRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
-//        categoryRepository.delete(category);
-//        redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno izbrisana!");
+//
 
         try {
             categoryRepository.deleteById(id);
-            redirectAttributes.addFlashAttribute("successMessage", "Kategorija je uspješno izbrisana.");
+            redirectAttributes.addFlashAttribute("successCategory", "Kategorija je uspješno izbrisana.");
         } catch (DataIntegrityViolationException e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Kategorija se ne može izbrisati jer je referencirana u tečajevima.");
+            redirectAttributes.addFlashAttribute("errorCategory", "Greska kod brisanja kategorije (Strani ključ).");
         }
         return "redirect:/category";
     }

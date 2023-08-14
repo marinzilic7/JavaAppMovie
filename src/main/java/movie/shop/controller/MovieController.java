@@ -1,11 +1,11 @@
-package course.shop.controller;
-import course.shop.model.Course;
-import course.shop.model.User;
-import course.shop.model.UserDetails;
-import course.shop.model.Category;
-import course.shop.repositories.CategoryRepository;
-import course.shop.repositories.CourseRepository;
-import course.shop.repositories.UserRepository;
+package movie.shop.controller;
+import movie.shop.model.Movie;
+import movie.shop.model.User;
+import movie.shop.model.UserDetails;
+import movie.shop.model.Category;
+import movie.shop.repositories.CategoryRepository;
+import movie.shop.repositories.MovieRepository;
+import movie.shop.repositories.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ import java.util.List;
 
 
 @Controller
-public class CourseController {
+public class MovieController {
     @Autowired
-    CourseRepository courseRepository;
+    MovieRepository movieRepository;
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
@@ -36,18 +36,18 @@ public class CourseController {
 
 
 
-    @GetMapping("/course")
-    public String showCourses (Model model,@AuthenticationPrincipal UserDetails userDetails) {
+    @GetMapping("/movie")
+    public String showMovies(Model model,@AuthenticationPrincipal UserDetails userDetails) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         Long userId = userDetails.getUserId(); // ili koristite metodu kojom dobavljate ID korisnika
         List<Category> categories = categoryRepository.findAll();
         System.out.println(categories.size());
-        model.addAttribute("courses", courseRepository.findAll());
+        model.addAttribute("movies", movieRepository.findAll());
         model.addAttribute("categories", categories);
         model.addAttribute("userId", userId);
         model.addAttribute("user", user);
-        model.addAttribute("course", new Course());
+        model.addAttribute("movie", new Movie());
         model.addAttribute("added", false);
         model.addAttribute("activeLink", "Igre");
         User userr = userDetails.getUser();
@@ -55,77 +55,77 @@ public class CourseController {
         Long userIdd = user.getUserId();
         System.out.println("ID korisnika: " + userIdd);
 
-        return "course";
+        return "movie";
     }
 
-    @PostMapping("/course/add")
-    public String addCourse (@Valid Course course, BindingResult result, Model model, RedirectAttributes redirectAttributes,UserDetails userDetails) {
+    @PostMapping("/movie/add")
+    public String addMovie(@Valid Movie movie, BindingResult result, Model model, RedirectAttributes redirectAttributes, UserDetails userDetails) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         if (result.hasErrors()) {
             List<Category> categories = categoryRepository.findAll();
             model.addAttribute("categories", categories);
-            model.addAttribute("course", course);
-            model.addAttribute("courses", courseRepository.findAll());
+            model.addAttribute("movie", movie);
+            model.addAttribute("movies", movieRepository.findAll());
             model.addAttribute("added", true);
             model.addAttribute("activeLink", "Igre");
-            return "course";
+            return "movie";
         }
         Long userIdd = user.getUserId();
         User selectedUser = userRepository.findById(userIdd).orElse(null);
-        course.setUser(selectedUser);
-        Long categoryId = course.getCategory().getId();
+        movie.setUser(selectedUser);
+        Long categoryId = movie.getCategory().getId();
         Category selectedCategory = categoryRepository.findById(categoryId).orElse(null);
-        course.setCategory(selectedCategory);
+        movie.setCategory(selectedCategory);
 
-        courseRepository.save(course);
-        redirectAttributes.addFlashAttribute("successCourse", "Tečaj je uspješno dodan!");
-        return "redirect:/course";
+        movieRepository.save(movie);
+        redirectAttributes.addFlashAttribute("successMovie", "Uspjesno dodano!");
+        return "redirect:/movie";
     }
 
 
 
-    @GetMapping("/course/edit/{id}")
+    @GetMapping("/movie/edit/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         model.addAttribute("user", user);
-        Course course = courseRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
-        model.addAttribute("course", course);
-        model.addAttribute("courses", courseRepository.findAll());
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new IllegalArgumentException());
+        model.addAttribute("movie", movie);
+        model.addAttribute("movies", movieRepository.findAll());
         model.addAttribute("activeLink", "Kategorije");
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
-        return "course_edit";
+        return "movie_edit";
     }
 
-    @PostMapping("course/edit/{id}")
-    public String editCoruse (@PathVariable("id") Long id, @Valid Course course, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    @PostMapping("movie/edit/{id}")
+    public String editMovie (@PathVariable("id") Long id, @Valid Movie movie, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails user = (UserDetails) auth.getPrincipal();
         if (result.hasErrors()) {
-            model.addAttribute("course", course);
+            model.addAttribute("course", movie);
             model.addAttribute("activeLink", "Igre");
-            return "course_edit";
+            return "movie_edit";
         }
         Long userIdd = user.getUserId();
         User selectedUser = userRepository.findById(userIdd).orElse(null);
-        course.setUser(selectedUser);
-        courseRepository.save(course);
-        redirectAttributes.addFlashAttribute("successCourse", "Tečaj je uspješno uredjen!");
-        return "redirect:/course";
+        movie.setUser(selectedUser);
+        movieRepository.save(movie);
+        redirectAttributes.addFlashAttribute("successMovie", "Uspjesno uredjeno!");
+        return "redirect:/movie";
     }
 
 
-    @GetMapping("/course/delete/{id}")
-    public String deleteGame(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("/movie/delete/{id}")
+    public String deleteMovie(@PathVariable("id") Long id, Model model, RedirectAttributes redirectAttributes) {
 
-            Course course = courseRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
-            courseRepository.delete(course);
-        redirectAttributes.addFlashAttribute("successCourse", "Tečaj je uspješno izbrisan!");
+            Movie movie = movieRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
+            movieRepository.delete(movie);
+        redirectAttributes.addFlashAttribute("successMovie", "Uspjesno izbrisano!");
 
 
-        return "redirect:/course";
+        return "redirect:/movie";
     }
 
 }

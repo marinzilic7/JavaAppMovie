@@ -1,8 +1,8 @@
-package course.shop.services;
+package movie.shop.services;
 
-import course.shop.model.User;
-import course.shop.model.UserDetails;
-import course.shop.repositories.UserRepository;
+import movie.shop.model.User;
+import movie.shop.model.UserDetails;
+import movie.shop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

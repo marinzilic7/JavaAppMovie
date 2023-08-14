@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <title>MovieApp</title>
+</head>
+<body layout:fragment="content">
+<div class="container mt-5 col-lg-6 col-xl-4 col-sm-7 shadow-lg p-5">
+  <div class="row mt-5">
+    <div class="col">
+      <h4 class="text-light">Uredi</h4>
+      <form th:object="${movie}" th:action="@{/movie/edit/{id}(id=${movie.getId()})}" method="POST">
+
+        <label class="col-form-label text-light">Unesite naziv :</label>
+        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}" type="text" th:field="*{name}" required>
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+        <label class="col-form-label text-light">Unesite opis :</label>
+        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('opis') ? 'is-invalid' : ''}" type="text" th:field="*{opis}" required>
+        <div th:if="${#fields.hasErrors('opis')}" th:errors="*{opis}" class="invalid-feedback"></div>
+        <label class="col-form-label text-light">Odaberite kategoriju:</label>
+
+        <select class="form-select inputPolje" aria-label="Category"  th:field="*{category}" required >
+          <option class="inputPolje" th:each="cat : ${categories}" th:value="${cat.getId()}" th:text="${cat.getName()}"></option>
+        </select>
+
+        <label class="col-form-label text-light">Unesite cijenu:</label>
+        <input class="form-control inputPolje" th:classappend="${#fields.hasErrors('cijena') ? 'is-invalid' : ''}" type="text" th:field="*{cijena}" required>
+        <div th:if="${#fields.hasErrors('cijena')}" th:errors="*{cijena}" class="invalid-feedback"></div>
+
+
+
+        <button type="submit" class="btn btn-primary mt-5 w-100">Uredi</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+<style>
+
+body{
+  background: #202020 ;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navBar{
+    background: #2A2A2A;
+
+}
+
+
+
+
+
+.inputPolje{
+
+background: #2A2A2A;
+color:rgba(245, 245, 245, 0.6);
+
+}
+
+.inputPolje::placeholder{
+
+color:rgba(245, 245, 245, 0.6);
+
+}
+
+.inputPolje:focus {
+  background-color: #2A2A2A;
+  color:#fff;
+
+}
+
+</style>

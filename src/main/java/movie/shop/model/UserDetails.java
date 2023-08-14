@@ -1,4 +1,4 @@
-package course.shop.model;
+package movie.shop.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
