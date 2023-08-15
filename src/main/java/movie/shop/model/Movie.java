@@ -37,6 +37,11 @@ public class Movie {
     private User createdBy;
 
 
+    @OneToMany(mappedBy = "movie")
+    List<Watch> watches;
+
+
+
 
     public Movie(Long id, String name, String opis, String cijena) {
         this.id = id;
@@ -104,5 +109,13 @@ public class Movie {
 
     public void setUser(User createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public List<Watch> getWatches() {
+        return watches;
+    }
+
+    public void setWatches(List<Watch> cours) {
+        this.watches = watches;
     }
 }

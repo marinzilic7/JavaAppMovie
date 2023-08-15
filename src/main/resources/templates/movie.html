@@ -36,6 +36,9 @@
                     <a data-toggle="tooltip" data-placement="top" title="Izbrisi" class="btn btn-sm btn-danger mt-1 w-100" th:href="@{/movie/delete/{id}(id=${movie.getId()})}">Izbrisi</a>
                     <br>
                     <a data-toggle="tooltip" data-placement="top" title="Uredi" class="btn btn-sm btn-warning mt-1 w-100" th:href="@{/movie/edit/{id}(id=${movie.getId()})}">Uredi</a>
+                    <br>
+                    <a data-toggle="tooltip" data-placement="top" title="Za gledati kasnije" class="btn btn-sm btn-success mt-1 w-100" th:href="@{/watch/{id}(id=${movie.getId()})}">Dodaj</a>
+
                 </div>
             </div>
 

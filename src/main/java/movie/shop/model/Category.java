@@ -21,7 +21,8 @@ import java.util.List;
         List<Movie> movie;
 
 
-
+        @OneToMany(mappedBy = "category")
+        List<Watch> watches;
 
 
 
@@ -57,6 +58,14 @@ import java.util.List;
 
         public void setCourses(List<Movie> cours) {
             this.movie = cours;
+        }
+
+        public List<Watch> getWatches() {
+            return watches;
+        }
+
+        public void setWatches(List<Watch> cours) {
+            this.watches = watches;
         }
 
 

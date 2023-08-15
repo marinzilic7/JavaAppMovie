@@ -39,6 +39,9 @@ public class User {
     @OneToMany(mappedBy = "createdBy")
     List<Movie> cours;
 
+    @OneToMany(mappedBy = "createdBy")
+    List<Watch> watches;
+
 
   
 
@@ -118,6 +121,14 @@ public class User {
 
     public void setCourses(List<Movie> cours) {
         this.cours = cours;
+    }
+
+    public List<Watch> getWatches() {
+        return watches;
+    }
+
+    public void setWatches(List<Watch> cours) {
+        this.watches = watches;
     }
 
 
