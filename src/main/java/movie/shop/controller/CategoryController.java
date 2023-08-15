@@ -2,9 +2,11 @@ package movie.shop.controller;
 
 import movie.shop.model.Category;
 import movie.shop.model.UserDetails;
+import movie.shop.model.Watch;
 import movie.shop.repositories.CategoryRepository;
 
 import jakarta.validation.Valid;
+import movie.shop.repositories.WatchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import java.util.List;
 
 
 @Controller
@@ -25,6 +28,9 @@ public class CategoryController {
 
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    WatchRepository watchRepository;
+
 
 
 
@@ -44,6 +50,18 @@ public class CategoryController {
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("added", false);
         model.addAttribute("activeLink", "Kategorije");
+
+        List<Watch> watches = watchRepository.findByCreatedBy(userDetails.getUser());
+
+        int watchCount = watches.size();
+
+        if (watchCount > 0) {
+            model.addAttribute("watches", watches);
+            model.addAttribute("watchCount", watchCount);
+            model.addAttribute("prikazi", true);
+        } else {
+            model.addAttribute("prikazi", false);
+        }
 
         return "category";
     }

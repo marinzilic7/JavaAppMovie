@@ -11,7 +11,7 @@
 </head>
 <body layout:fragment="content">
 <div th:if="${successMovie}" class=" mt-5 alert alert-success position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${successMovie}"></p>  </div>
-
+<div th:if="${error}" class=" mt-5 alert alert-danger position-absolute end-0 col-7 col-md-4 col-lg-3  col-xl-2 text-center me-4 mt-5"><p th:text="${error}"></p></div>
 <br>
 <br>
 <br>
@@ -99,6 +99,7 @@
         })
     </script>
 
+
 </body>
 </html>
 
@@ -143,11 +144,41 @@ color:rgba(245, 245, 245, 0.6);
 
 }
 
-@media only screen and (max-width: 576px) {
+ @media only screen and (max-width: 576px) {
   .Kartica {
     margin:auto !important;
     margin-top:20px !important;
   }
+   .navbar-toggler-icon {
+            color: white !important;
+   }
+
+  .numberWatch{
+    display:none;
+  }
+
 }
+
+.stopWatch{
+    color:#fff;
+  }
+.numberWatch{
+    position:absolute;
+
+    width: 20px;
+    border-radius: 10px;
+    height: 25px;
+    bottom:6px;
+    background:#fff;
+    color:black !important;
+    font-size:20px;
+    transform: translate(90%,-30%);
+    text-align: center;
+    line-height: 25px;
+
+  }
+
+
+
 
 </style>

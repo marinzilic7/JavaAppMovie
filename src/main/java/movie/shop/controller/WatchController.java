@@ -51,6 +51,17 @@ public class WatchController {
         System.out.println("User je" + userr);
         Long userIdd = user.getUserId();
         System.out.println("ID korisnika: " + userIdd);
+        List<Watch> watches = watchRepository.findByCreatedBy(userDetails.getUser());
+
+        int watchCount = watches.size();
+
+        if (watchCount > 0) {
+            model.addAttribute("watches", watches);
+            model.addAttribute("watchCount", watchCount);
+            model.addAttribute("prikazi", true);
+        } else {
+            model.addAttribute("prikazi", false);
+        }
 
         return "watch";
     }
@@ -75,7 +86,7 @@ public class WatchController {
 
         if (existingWatch != null) {
             redirectAttributes.addFlashAttribute("error", "Film je već dodan u listu za gledanje.");
-            return "redirect:/watch";
+            return "redirect:/movie";
         }
 
         Watch newWatch = new Watch();
@@ -85,7 +96,8 @@ public class WatchController {
 
         watchRepository.save(newWatch);
 
-        return "redirect:/watch"; // Redirect to the watch list page after adding the movie
+        redirectAttributes.addFlashAttribute("successMovie", "Film je uspjesno dodan  za 'gledati kasnije'.");
+        return "redirect:/movie";
     }
 
     @GetMapping("/watch/delete/{id}")
@@ -93,7 +105,7 @@ public class WatchController {
 
        Watch watch = watchRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Pogrešan ID"));
         watchRepository.delete(watch);
-        redirectAttributes.addFlashAttribute("successMovie", "Uspjesno izbrisano!");
+        redirectAttributes.addFlashAttribute("successDeleteWatch", "Uspjesno izbrisano!");
 
 
         return "redirect:/watch";

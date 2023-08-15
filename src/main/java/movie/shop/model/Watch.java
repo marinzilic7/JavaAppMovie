@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import movie.shop.model.Movie;
 import movie.shop.model.User;
 
-
+import java.util.List;
 @Entity
 @Table(name="watch")
 public class Watch {
@@ -23,7 +23,6 @@ public class Watch {
     @ManyToOne
     @JoinColumn(name = "category_id")  // Naziv stupca koji će povezivati Course s Category
     private Category category;
-
 
 
     public Watch(Long id) {
@@ -72,4 +71,6 @@ public class Watch {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+
 }
